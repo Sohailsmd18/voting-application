@@ -27,6 +27,8 @@ router.post('/signup', async (req, res) =>{
 
         // Create a new User document using the Mongoose model
         const newUser = new User(data);
+        console.log(data);
+        console.log(newUser);
 
         // Save the new user to the database
         const response = await newUser.save();
@@ -43,7 +45,7 @@ router.post('/signup', async (req, res) =>{
     catch(err){
         console.log(err);
         res.status(500).json({error: 'Internal Server Error'});
-    }    
+    }
 })
 
 // Login Route
@@ -51,7 +53,7 @@ router.post('/login', async(req, res) => {
     try{
         // Extract aadharCardNumber and password from request body
         const {aadharCardNumber, password} = req.body;
-  
+
         // Check if aadharCardNumber or password is missing
         if (!aadharCardNumber || !password) {
             return res.status(400).json({ error: 'Aadhar Card Number and password are required' });

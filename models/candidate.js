@@ -26,7 +26,7 @@ const canditateSchema = new mongoose.Schema({
         }
     ],
     voteCount:{
-        type:Number,
+        type:String,
         default:0
     }
 });

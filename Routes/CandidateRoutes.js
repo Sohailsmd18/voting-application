@@ -1,4 +1,4 @@
- const express = require('express');
+const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const {jwtAuthMiddleware, generateToken} = require('../jwt');
@@ -85,7 +85,7 @@ router.delete('/:candidateID', jwtAuthMiddleware, async (req, res)=>{
 })
 
 // let's start voting
-router.get('/vote/:candidateID', jwtAuthMiddleware, async (req, res)=>{
+router.post('/votes/:candidateID', jwtAuthMiddleware, async (req, res)=>{
     // no admin can vote
     // user can only vote once
     
@@ -131,7 +131,7 @@ router.get('/vote/count', async (req, res) => {
     try{
         // Find all candidates and sort them by voteCount in descending order
         const candidate = await Candidate.find().sort({voteCount: 'desc'});
-
+        console.log(candidate);
         // Map the candidates to only return their name and voteCount
         const voteRecord = candidate.map((data)=>{
             return {

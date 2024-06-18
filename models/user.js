@@ -17,14 +17,14 @@ const userSchema = new mongoose.Schema({
     mobile: {
         type: String
     },
-    address: { 
+    address: {
         type: String,
         required: true
     },
     aadharCardNumber: {
         type: Number,
         required: true,
-        unqiue: true
+       // unique: true
     },
     password: {
         type: String,
