@@ -1,71 +1,89 @@
-// import React, { useState } from 'react'
+import React from 'react';
 import { Link } from "react-router-dom";
-import './Register.css'
+import './Register.css';
 import { useForm } from "react-hook-form";
+import axios from 'axios';
 
 function Register() {
     const { register, handleSubmit, formState, reset } = useForm()
     const { errors } = formState;
 
-    const onSubmit = (data) => {
-        alert('Form is Submitted')
-        console.log(data);
-        reset();
-    }
-
+    const onSubmit = async (data) => {
+        try {
+            console.log('Form data:', data); // Log data for debugging
+            const response = await axios.post('http://localhost:3001/user/signup', data);
+            if (response.status === 200) {
+                alert('Form is Submitted');
+                console.log(response.data);
+                reset();
+            } else {
+                alert('Failed to submit form');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('An error occurred while submitting the form');
+        }
+    };
 
     return (
         <div id='register-container'>
-           
             <form onSubmit={handleSubmit(onSubmit)} className='input-group'>
                 <input
-                    type='aadharCardNo'
-                    placeholder='aadharCardNo'
-                    {...register('aadharCardNo', {
-                        pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message: 'Invalid aadharCardNo'
-                        }
-                    })}
+                    type='text'
+                    placeholder='Name'
+                    {...register('name', { required: 'Name is required' })}
+                    required
+                />
+                {errors.name && <div className='error'>{errors.name.message}</div>}
+                <br />
+                <input
+                    type='number'
+                    placeholder='Age'
+                    {...register('age', { required: 'Age is required' })}
+                    required
+                />
+                {errors.age && <div className='error'>{errors.age.message}</div>}
+                <br />
+                <input
+                    type='email'
+                    placeholder='Email'
+                    {...register('email', { required: 'Email is required' })}
                     required
                 />
                 {errors.email && <div className='error'>{errors.email.message}</div>}
                 <br />
-                <input type='text'
-                    placeholder="Full Name"
-                    {...register('fullName', {
-                        required: 'Name is required'
-                    })}
-                    required
-                />
-                {errors.fullName && <div>{errors.fullName.message}</div>}
-                <br />
-                <select className="select-reason"
-                    {...register('reason', {
-                    })}
-                    required
-                >
-                    <option value=' '>I'm Voter</option>
-                    <option value='admin'> I'm Admin</option>
-                </select>
-                {errors.reason && <div className='error'>{errors.reason.message}</div>}
-                <br />
                 <input
                     type='tel'
-                    placeholder='Phone Number'
-                    {...register('phone', {
+                    placeholder='Mobile'
+                    {...register('mobile', { required: 'Mobile is required' })}
+                    required
+                />
+                {errors.mobile && <div className='error'>{errors.mobile.message}</div>}
+                <br />
+                <input
+                    type='text'
+                    placeholder='Address'
+                    {...register('address', { required: 'Address is required' })}
+                    required
+                />
+                {errors.address && <div className='error'>{errors.address.message}</div>}
+                <br />
+                <input
+                    type='text'
+                    placeholder='Aadhar Card Number'
+                    {...register('aadharCardNumber', {
                         pattern: {
-                            value: /^\d{10}$/,
-                            message: 'Phone number must be 10 digits'
+                            value: /^\d{12}$/,
+                            message: 'Invalid Aadhar Card Number'
                         }
                     })}
                     required
                 />
-                {errors.phone && <div className='error'>{errors.phone.message}</div>}
+                {errors.aadharCardNumber && <div className='error'>{errors.aadharCardNumber.message}</div>}
                 <br />
-                <input type='password'
-                    id='password'
-                    placeholder='Your Password'
+                <input
+                    type='password'
+                    placeholder='Password'
                     {...register('password', {
                         pattern: {
                             value: /^.{6,}$/,
@@ -76,25 +94,13 @@ function Register() {
                 />
                 {errors.password && <div className='error'>{errors.password.message}</div>}
                 <br />
-                <div className="checkbox-grp">
-                    <input
-                        type="checkbox"
-                        {...register('terms', {
-                            required: 'You must accept the terms and conditions'
-                        })}
-                    />
-                    <label htmlFor="terms" className="terms">I Accept <Link to="/terms-conditions"> Terms and Conditions </Link> and
-                        <Link to="/privacy">  Privacy Policy  </Link>
-                    </label>
-                </div>
-                {errors.terms && <div className='error'>{errors.terms.message}</div>}
                 <button type='submit'>Register</button>
                 <p className='login-link'>
-                    Not a member yet? <Link to="/login">Login</Link>
+                    Already a member? <Link to="/login">Login</Link>
                 </p>
             </form>
         </div>
-    )
+    );
 }
 
 export default Register;
