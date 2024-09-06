@@ -1,21 +1,25 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import './Register.css';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 
 function Register() {
-    const { register, handleSubmit, formState, reset } = useForm()
+    const { register, handleSubmit, formState, reset } = useForm();
     const { errors } = formState;
+    const navigate = useNavigate(); // To handle redirection
 
     const onSubmit = async (data) => {
         try {
             console.log('Form data:', data); // Log data for debugging
-            const response = await axios.post('http://localhost:3001/user/signup', data);
+            const response = await axios.post('http://localhost:3000/user/signup', data);
             if (response.status === 200) {
-                alert('Form is Submitted');
+                alert('Registration successful');
                 console.log(response.data);
                 reset();
+
+                // Redirect to the Vote page after successful registration
+                navigate('/vote');
             } else {
                 alert('Failed to submit form');
             }

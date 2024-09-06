@@ -9,6 +9,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+}
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.portal-title {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #6f4baf;
+    
 }
 
 #login-container {
@@ -19,10 +33,6 @@ body {
     margin: 5rem;
     width: 100%;
     max-width: 350px;
-}
-
-.logo {
-    width: 150px;
 }
 
 .input-group input {
@@ -61,7 +71,6 @@ button:hover {
     font-size: 0.7rem;
 }
 
-
 .forgot-password a:hover {
     text-decoration: underline;
 }
@@ -93,7 +102,6 @@ button:hover {
     font-size: 13px;
 }
 
-
 .error {
     font-size: 13px;
     color: red;
@@ -101,10 +109,7 @@ button:hover {
     margin-top: 5px;
 }
 
-
-/*Media Queries for Responsive Design*/ 
-
-/* Mobile View(it change the color when width is below 450)  */
+/* Media Queries for Responsive Design */
 @media (max-width: 450px) {
     #login-container {
         margin: 0 auto;
